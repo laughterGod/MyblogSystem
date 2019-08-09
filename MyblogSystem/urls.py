@@ -18,5 +18,5 @@ from django.urls import path, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('^$', admin.site.urls)
+    # re_path('^$', admin.site.urls)
 ]
