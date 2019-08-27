@@ -11,6 +11,8 @@ class Article(models.Model):
     ctime = models.DateTimeField(auto_now_add=True)
     utime = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1)
+    is_deleted = models.BooleanField(default=False)
+    readed_num = models.IntegerField(default=0)
 
     # 废弃了，已经在admin.py定制了
     def __str__(self):
