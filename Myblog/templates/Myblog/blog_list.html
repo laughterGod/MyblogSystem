@@ -1,11 +1,15 @@
-{% extends 'Myblog/../base.html' %}
+{% extends 'base.html' %}
+{% load staticfiles %}
 
 {# 页面标题 #}
 {% block title %}
     我的博客
 {% endblock %}
-
 {% block nav_blog_active %}active{% endblock %}
+
+ {% block header_extends %}
+     <link rel="stylesheet" href="{% static 'Myblog/blog.css' %}">
+ {% endblock %}
 
 {# 页面内容 #}
 {% block content %}
@@ -18,14 +22,17 @@
                     </div>
                     <div class="panel-body">
                         {% for blog in blogs %}
-                            <a href="{% url 'Myblog:blog_detail' blog.id %}">
-                                <h4>{{ blog.title }}</h4>
-                            </a>
-                            <p>{{ blog.content|truncatechars:30 }}</p>
+                            <div class="blog">
+                                <a href="{% url 'Myblog:blog_detail' blog.id %}">
+                                    <h4>{{ blog.title }}</h4>
+                                </a>
+                                <p>{{ blog.content|truncatechars:150 }}</p>
+                            </div>
                         {% empty %}
-                            <p>- - 暂无博客，敬请期待 - -</p>
+                            <div class="blog">
+                                <h4>- - 暂无博客，敬请期待 - -</h4>
+                            </div>
                         {% endfor %}
-{#                        <p>共有{{ blogs|length }}篇博客</p>#}
                     </div>
                 </div>
             </div>
@@ -35,7 +42,7 @@
                         <h3 class="panel-title">博客分类</h3>
                     </div>
                     <div class="panel-body">
-                        <ul style="list-style-type: none">
+                        <ul class="blog-types">
                             {% for blog_type in blog_types %}
                                 <li><a href="{% url 'Myblog:blogs_with_type' blog_type.id %}"> {{ blog_type.type_name }}</a></li>
                             {% empty %}
