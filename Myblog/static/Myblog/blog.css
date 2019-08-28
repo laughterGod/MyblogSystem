@@ -11,3 +11,22 @@ div.blog:not(:last-child){
 div.blog.h4{
     margin-top: 0.5em;
 }
+
+div.blog.p.blog-info {
+    margin-bottom: 0;
+}
+
+ul.blog-info-description{
+    list-style-type: none;
+    margin-bottom: 1em;
+}
+
+ul.blog-info-description li{
+    display: inline-block;
+    margin-right: 2em;
+}
+
+div.blog-content{
+    text-indent: 2em;
+}
+

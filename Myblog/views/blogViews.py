@@ -28,6 +28,7 @@ def blogs_with_type(request, blog_type_id):
     context = {}
     context['blogs'] = BlogModels.Blog.objects.filter(blog_type=blog_type)
     context['blog_type'] = blog_type
+    context['blog_types'] = BlogModels.BlogType.objects.all()
     return render_to_response('Myblog/blog_with_type.html', context)
 
 

@@ -17,15 +17,17 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">博客列表（共有{{ blogs|length }}篇博客）</h3>
-                    </div>
+                    <div class="panel-heading">{% block blog_list_title %}博客列表（共有{{ blogs|length }}篇博客）{% endblock %}</div>
                     <div class="panel-body">
                         {% for blog in blogs %}
                             <div class="blog">
                                 <a href="{% url 'Myblog:blog_detail' blog.id %}">
                                     <h4>{{ blog.title }}</h4>
                                 </a>
+                                <p class="blog-info">
+                                    <span class="glyphicon glyphicon-tag"></span><a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">{{ blog.blog_type.type_name }}</a>
+                                    <span class="glyphicon glyphicon-time"></span>{{ blog.ctime|date:"Y-m-d" }}
+                                </p>
                                 <p>{{ blog.content|truncatechars:150 }}</p>
                             </div>
                         {% empty %}
@@ -38,9 +40,7 @@
             </div>
             <div class="hidden-xs col-sm-4 col-md-3 col-lg-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">博客分类</h3>
-                    </div>
+                    <div class="panel-heading">博客分类</div>
                     <div class="panel-body">
                         <ul class="blog-types">
                             {% for blog_type in blog_types %}

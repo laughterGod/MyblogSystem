@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {# 页面标题 #}
 {% block title %}
@@ -7,15 +8,23 @@
 
 {% block nav_blog_active %}active{% endblock %}
 
+ {% block header_extends %}
+     <link rel="stylesheet" href="{% static 'Myblog/blog.css' %}">
+ {% endblock %}
+
 {# 页面内容 #}
 {% block content %}
-    <h3>{{ blog.title }}</h3>
-    <p>作者：{{ blog.author }}</p>
-    <p>发表日期：{{ blog.ctime|date:"Y-m-d H:i:s" }}</p>
-    <p>分类：
-        <a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">
-            {{ blog.blog_type }}
-        </a>
-    </p>
-    <p>{{ blog.content }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <h3>{{ blog.title }}</h3>
+                <ul class="blog-info-description">
+                    <li>作者：{{ blog.author }}</li>
+                    <li>分类：<a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">{{ blog.blog_type.type_name }}</a></li>
+                    <li>发表日期：{{ blog.ctime|date:"Y-m-d H:i:s" }}</li>
+                </ul>
+                <div class="blog-content">{{ blog.content }}</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
