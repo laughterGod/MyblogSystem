@@ -19,6 +19,15 @@ def blog_list(request):
     blogs = BlogModels.Blog.objects.filter(is_deleted=False)
     context = {}
     context['blogs'] = blogs
+    context['blog_types'] = BlogModels.BlogType.objects.all()
     return render_to_response("Myblog/blog_list.html", context)
+
+
+def blogs_with_type(request, blog_type_id):
+    blog_type = get_object_or_404(BlogModels.BlogType, pk=blog_type_id)
+    context = {}
+    context['blogs'] = BlogModels.Blog.objects.filter(blog_type=blog_type)
+    context['blog_type'] = blog_type
+    return render_to_response('Myblog/blog_with_type.html', context)
 
 

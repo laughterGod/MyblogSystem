@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {# 自适应屏幕，响应式 #}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    {# 如果加载慢，就放在body里 #}
+    <script type="text/javascript" src="{% static 'jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+    {% block header_extends %}{% endblock %}
+</head>
+<body>
+{#    <link rel="stylesheet" href="/static/css/base.css">#}
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">个人博客网站</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar-collapse" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="{% block nav_home_active %}{% endblock %}"><a href="{% url 'home' %}">首页</a></li>
+                    <li class="{% block nav_blog_active %}{% endblock %}"><a href="{% url 'Myblog:blog_list' %}">博客</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{# 这个废弃了，用bootstrap代替了css #}
+{#    <div class="nav">#}
+{#        <a class="logo" href="{% url 'home' %}">#}
+{#            <h2>个人博客网站</h2>#}
+{#        </a>#}
+{#        <a href="{% url 'home' %}">首页</a>#}
+{#        <a href="{% url 'Myblog:blog_list' %}">博客</a>#}
+{#    </div>#}
+    {# <hr> #}
+    {% block content %}{% endblock %}
+
+{#   link css文件替换了下面代码 #}
+{#    <style type="text/css">#}
+{#        * {#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#        }#}
+{#        div.nav {#}
+{#            background: #bdd1e2;#}
+{#            border-bottom: 1px solid #ff618c;#}
+{#            padding: 10px 5px;#}
+{#        }#}
+{#        div.nav a{#}
+{#            text-decoration: none;#}
+{#            color: #31788e;#}
+{#            padding: 5px 10px;#}
+{#        }#}
+{#        div.nav a.logo{#}
+{#            display: inline-block;#}
+{#            font-size: 120%;#}
+{#        }#}
+{#    </style>#}
+</body>
+</html>

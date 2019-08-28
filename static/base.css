@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin-top: 70px!important;
+}
+
+/*这个废弃了，用bootstrap代替了css*/
+/*div.nav {*/
+    /*background: #bdd1e2;*/
+    /*border-bottom: 1px solid #ff618c;*/
+    /*padding: 10px 5px;*/
+/*}*/
+/*div.nav a{*/
+    /*text-decoration: none;*/
+    /*color: #31788e;*/
+    /*padding: 5px 10px;*/
+/*}*/
+/*div.nav a.logo{*/
+    /*display: inline-block;*/
+    /*font-size: 120%;*/
+/*}*/

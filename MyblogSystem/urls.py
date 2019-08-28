@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.urls import include
 from Myblog.views import *
+from .views import *
 
 urlpatterns = [
-    path('', blog_list, name='home'),
+    path('', home , name='home'),
     path('admin/', admin.site.urls),
     path('blog/', include('Myblog.urls')),
     # re_path('^$', admin.site.urls)

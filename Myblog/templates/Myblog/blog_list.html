@@ -1,13 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>我的博客</title>
-</head>
-<body>
-    {% for blog in blogs %}
-        <li><a href="{% url 'Myblog:blog_detail' blog.id %}">{{ blog.title }}</a></li>
-    {% endfor %}
+{% extends 'Myblog/../base.html' %}
 
-</body>
-</html>
+{# 页面标题 #}
+{% block title %}
+    我的博客
+{% endblock %}
+
+{% block nav_blog_active %}active{% endblock %}
+
+{# 页面内容 #}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">博客列表（共有{{ blogs|length }}篇博客）</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for blog in blogs %}
+                            <a href="{% url 'Myblog:blog_detail' blog.id %}">
+                                <h4>{{ blog.title }}</h4>
+                            </a>
+                            <p>{{ blog.content|truncatechars:30 }}</p>
+                        {% empty %}
+                            <p>- - 暂无博客，敬请期待 - -</p>
+                        {% endfor %}
+{#                        <p>共有{{ blogs|length }}篇博客</p>#}
+                    </div>
+                </div>
+            </div>
+            <div class="hidden-xs col-sm-4 col-md-3 col-lg-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">博客分类</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul style="list-style-type: none">
+                            {% for blog_type in blog_types %}
+                                <li><a href="{% url 'Myblog:blogs_with_type' blog_type.id %}"> {{ blog_type.type_name }}</a></li>
+                            {% empty %}
+                                <li>暂无分类</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
