@@ -15,14 +15,14 @@ def article_detail(request, article_id):
     # try:
     #     article = ArticleModels.Article.objects.get(pk=article_id)
     #     #return HttpResponse("<h2>文章标题: %s</h2> <br> 文章内容: %s" % (article.title, article.content))
-    #     context = {}
+    #     context = dict()
     #     context['article'] = article
     #     return render(request, "Myblog/article_detail.html", context)
     # except ArticleModels.Article.DoesNotExist:
     #     raise Http404("id not exist")
 
     article = get_object_or_404(ArticleModels.Article, pk=article_id)
-    context = {}
+    context = dict()
     context['article'] = article
     return render_to_response("Myblog/article_detail.html", context)
 
@@ -30,7 +30,7 @@ def article_detail(request, article_id):
 def article_list(request):
     # articles = ArticleModels.Article.objects.all()
     articles = ArticleModels.Article.objects.filter(is_deleted=False)
-    context = {}
+    context = dict()
     context['articles'] = articles
     return render_to_response("Myblog/article_list.html", context)
 

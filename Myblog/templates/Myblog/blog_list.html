@@ -25,8 +25,8 @@
                                     <h4>{{ blog.title }}</h4>
                                 </a>
                                 <p class="blog-info">
-                                    <span class="glyphicon glyphicon-tag"></span><a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">{{ blog.blog_type.type_name }}</a>
-                                    <span class="glyphicon glyphicon-time"></span>{{ blog.ctime|date:"Y-m-d" }}
+                                    <span class="glyphicon glyphicon-tag"></span> <a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">{{ blog.blog_type.type_name }}</a>&nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-time"></span> {{ blog.ctime|date:"Y-m-d" }}&nbsp;&nbsp; 阅读({{ blog.readed_num }})
                                 </p>
                                 <p>{{ blog.content|striptags|truncatechars:150 }}</p>
                             </div>

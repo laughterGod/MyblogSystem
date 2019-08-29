@@ -37,12 +37,12 @@ def get_blog_list_common_data(request, blogs_all_list):
 
     # 获取日期归档对应的博客数量
     blog_dates = BlogModels.Blog.objects.dates('ctime', 'month', order='DESC')
-    blog_dates_dict = {}
+    blog_dates_dict = dict()
     for blog_date in blog_dates:
         blog_count = BlogModels.Blog.objects.filter(ctime__year=blog_date.year, ctime__month=blog_date.month).count()
         blog_dates_dict[blog_date] = blog_count
 
-    context = {}
+    context = dict()
     context['blogs'] = page_of_blogs.object_list
     context['page_of_blogs'] = page_of_blogs
     context['page_range'] = page_range
@@ -53,11 +53,16 @@ def get_blog_list_common_data(request, blogs_all_list):
 
 def blog_detail(request, blog_id):
     blog = get_object_or_404(BlogModels.Blog, pk=blog_id)
-    context = {}
+    if not request.COOKIES.get('blog_%s_readed' % blog_id):
+        blog.readed_num += 1
+        blog.save()
+    context = dict()
     context['blog'] = blog
-    context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last() # __gt大于
-    context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first() # __lt小于
-    return render_to_response("Myblog/blog_detail.html", context)
+    context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
+    context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
+    response = render_to_response("Myblog/blog_detail.html", context)
+    response.set_cookie('blog_%s_readed' % blog_id, 'true', max_age=3600)  # 3600秒内有效
+    return response
 
 
 def blog_list(request):
