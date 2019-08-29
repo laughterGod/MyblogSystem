@@ -27,12 +27,27 @@ def get_blog_list_common_data(request, blogs_all_list):
         page_range.insert(0, 1)
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
+
+    # 获取博客分类对应的博客数量
+    blog_types = BlogModels.BlogType.objects.all()
+    blog_types_list = []
+    for blog_type in blog_types:
+        blog_type.blog_count = BlogModels.Blog.objects.filter(blog_type=blog_type).count()
+        blog_types_list.append(blog_type)
+
+    # 获取日期归档对应的博客数量
+    blog_dates = BlogModels.Blog.objects.dates('ctime', 'month', order='DESC')
+    blog_dates_dict = {}
+    for blog_date in blog_dates:
+        blog_count = BlogModels.Blog.objects.filter(ctime__year=blog_date.year, ctime__month=blog_date.month).count()
+        blog_dates_dict[blog_date] = blog_count
+
     context = {}
     context['blogs'] = page_of_blogs.object_list
     context['page_of_blogs'] = page_of_blogs
     context['page_range'] = page_range
-    context['blog_types'] = BlogModels.BlogType.objects.all()
-    context['blog_dates'] = BlogModels.Blog.objects.dates('ctime', 'month', order='DESC')
+    context['blog_types'] = blog_types_list
+    context['blog_dates'] = blog_dates_dict
     return context
 
 
