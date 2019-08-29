@@ -22,6 +22,7 @@ from .views import *
 urlpatterns = [
     path('', home , name='home'),
     path('admin/', admin.site.urls),
+    path('ckeditor/',include('ckeditor_uploader.urls')),
     path('blog/', include('Myblog.urls')),
     # re_path('^$', admin.site.urls)
 ]

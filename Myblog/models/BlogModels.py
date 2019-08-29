@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -14,7 +15,7 @@ class BlogType(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=50)
     blog_type =  models.ForeignKey(BlogType, on_delete=models.DO_NOTHING)
-    content = models.TextField()
+    content = RichTextField()
     # ctime = models.DateTimeField(default=timezone.now())
     ctime = models.DateTimeField(auto_now_add=True)
     utime = models.DateTimeField(auto_now=True)
