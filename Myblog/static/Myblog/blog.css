@@ -30,3 +30,7 @@ div.blog-content{
     text-indent: 2em;
 }
 
+div.paginator{
+    text-align: center;
+}
+
