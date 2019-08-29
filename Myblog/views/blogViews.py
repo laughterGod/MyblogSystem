@@ -1,4 +1,5 @@
 from django.shortcuts import render, render_to_response, get_object_or_404
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from ..models import BlogModels
 from django.template import loader
@@ -15,10 +16,14 @@ def blog_detail(request, blog_id):
 
 
 def blog_list(request):
+    page_num = request.GET.get('page',1)
     # blogs = BlogModels.Blog.objects.all()
-    blogs = BlogModels.Blog.objects.filter(is_deleted=False)
+    blogs_all_list = BlogModels.Blog.objects.filter(is_deleted=False)
+    paginator = Paginator(blogs_all_list, 10)
+    page_of_blogs = paginator.get_page(page_num) # 自动转换为int，出错后自动返回1
     context = {}
-    context['blogs'] = blogs
+    # context['blogs'] = page_of_blogs.object_list
+    context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogModels.BlogType.objects.all()
     return render_to_response("Myblog/blog_list.html", context)
 
