@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 from Myblog.views import *
 from .views import *
 
@@ -26,3 +28,5 @@ urlpatterns = [
     path('blog/', include('Myblog.urls')),
     # re_path('^$', admin.site.urls)
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
