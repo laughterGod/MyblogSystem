@@ -54,8 +54,13 @@ def get_blog_list_common_data(request, blogs_all_list):
 def blog_detail(request, blog_id):
     blog = get_object_or_404(BlogModels.Blog, pk=blog_id)
     if not request.COOKIES.get('blog_%s_readed' % blog_id):
-        blog.readed_num += 1
-        blog.save()
+        if BlogModels.ReadNum.objects.filter(blog=blog).count():
+            readnum = BlogModels.ReadNum.objects.get(blog=blog)
+        else:
+            readnum = BlogModels.ReadNum(blog=blog)
+        readnum.read_num += 1
+        readnum.save()
+
     context = dict()
     context['blog'] = blog
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
