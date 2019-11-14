@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models.fields import exceptions
-from read_statistics.models import ReadNum, ReadNumExpandMethod
+from read_statistics.models import ReadNumExpandMethod
 
 
 # Create your models here.
