@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models.fields import exceptions
-from read_statistics.models import ReadNumExpandMethod
+from read_statistics.models import ReadNumExpandMethod, ReadDetail
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 # Create your models here.
@@ -23,6 +24,7 @@ class Blog(models.Model, ReadNumExpandMethod):
     ctime = models.DateTimeField(auto_now_add=True)
     utime = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1)
+    read_details = GenericRelation(ReadDetail)
     is_deleted = models.BooleanField(default=False)
     # read_num = models.IntegerField(default=0)
 
