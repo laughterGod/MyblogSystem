@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Myblog.apps.MyblogConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'Myblog.apps.MyblogConfig',
+    'read_statistics'
 
 ]
 

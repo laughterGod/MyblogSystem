@@ -1,5 +1,7 @@
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.core.paginator import Paginator
+from django.contrib.contenttypes.models import ContentType
+from read_statistics.utils import read_statistics_once_read
 from django.http import HttpResponse, HttpResponseRedirect
 from ..models import BlogModels
 from django.template import loader
@@ -53,20 +55,34 @@ def get_blog_list_common_data(request, blogs_all_list):
 
 def blog_detail(request, blog_id):
     blog = get_object_or_404(BlogModels.Blog, pk=blog_id)
+    read_cookie_key = read_statistics_once_read(request, blog)
+
+    '''
     if not request.COOKIES.get('blog_%s_readed' % blog_id):
+        ct = ContentType.objects.get_for_model(BlogModels.Blog)
+        if BlogModels.ReadNum.objects.filter(content_type=ct, object_id=blog.pk).count():
+            readnum = BlogModels.ReadNum.objects.get(content_type=ct, object_id=blog.pk)
+        else:
+            readnum = BlogModels.ReadNum(content_type=ct, object_id=blog.pk)
+
+        readnum.read_num += 1
+        readnum.save()
+        
+        # 以下是前前注释
         if BlogModels.ReadNum.objects.filter(blog=blog).count():
             readnum = BlogModels.ReadNum.objects.get(blog=blog)
         else:
             readnum = BlogModels.ReadNum(blog=blog)
         readnum.read_num += 1
         readnum.save()
+        '''
 
     context = dict()
     context['blog'] = blog
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
     context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
     response = render_to_response("Myblog/blog_detail.html", context)
-    response.set_cookie('blog_%s_readed' % blog_id, 'true', max_age=3600)  # 3600秒内有效
+    response.set_cookie(read_cookie_key, 'true', max_age=3600)  # 3600秒内有效
     return response
 
 
