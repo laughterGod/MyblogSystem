@@ -63,6 +63,6 @@ def login_user(request):
         login(request, user)
         return redirect(referer)
     else:
-        return render(request, 'error.html', {'message':'用户名或密码不正确'})
+        return render(request, 'error.html', {'message':'用户名或密码不正确', 'redirect_to': referer})
 
 
