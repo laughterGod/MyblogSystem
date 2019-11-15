@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from ..models import ArticleModels
 from django.template import loader
@@ -24,7 +24,7 @@ def article_detail(request, article_id):
     article = get_object_or_404(ArticleModels.Article, pk=article_id)
     context = dict()
     context['article'] = article
-    return render_to_response("Myblog/article_detail.html", context)
+    return render(request,"Myblog/article_detail.html", context)
 
 
 def article_list(request):
@@ -32,6 +32,6 @@ def article_list(request):
     articles = ArticleModels.Article.objects.filter(is_deleted=False)
     context = dict()
     context['articles'] = articles
-    return render_to_response("Myblog/article_list.html", context)
+    return render(request,"Myblog/article_list.html", context)
 
 

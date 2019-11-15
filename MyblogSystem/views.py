@@ -1,12 +1,14 @@
 import datetime
 
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.db.models import Sum
 from django.core.cache import cache
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from Myblog.models.BlogModels import Blog
+from django.urls import reverse
 
 
 def get_7_days_hot_blogs():
@@ -49,5 +51,18 @@ def home(request):
     context['hot_blogs_for_7_days'] = hot_blogs_for_7_days
     context['hot_blogs_for_30_days'] = hot_blogs_for_30_days
 
-    return render_to_response('home.html', context)
+    return render(request, 'home.html', context)
+
+
+def login_user(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = authenticate(request, username=username, password=password)
+    referer = request.META.get('HTTP_REFERER', reverse('home'))
+    if user is not None:
+        login(request, user)
+        return redirect(referer)
+    else:
+        return render(request, 'error.html', {'message':'用户名或密码不正确'})
+
 

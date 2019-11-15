@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.contenttypes.models import ContentType
 from read_statistics.utils import read_statistics_once_read
@@ -8,6 +8,8 @@ from django.template import loader
 from django.http import Http404
 from django.urls import reverse
 from django.conf import settings
+
+from comment.models import Comment
 
 
 # Create your views here.
@@ -56,6 +58,8 @@ def get_blog_list_common_data(request, blogs_all_list):
 def blog_detail(request, blog_id):
     blog = get_object_or_404(BlogModels.Blog, pk=blog_id)
     read_cookie_key = read_statistics_once_read(request, blog)
+    blog_content_type = ContentType.objects.get_for_model(blog)
+    comments = Comment.objects.filter(content_type=blog_content_type, object_id=blog.pk)
 
     '''
     if not request.COOKIES.get('blog_%s_readed' % blog_id):
@@ -79,9 +83,12 @@ def blog_detail(request, blog_id):
 
     context = dict()
     context['blog'] = blog
+    context['comments'] = comments
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
     context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
-    response = render_to_response("Myblog/blog_detail.html", context)
+    # context['user'] = request.user
+    # response = render(request,"Myblog/blog_detail.html", context)
+    response = render(request, "Myblog/blog_detail.html", context)
     response.set_cookie(read_cookie_key, 'true', max_age=3600)  # 3600秒内有效
     return response
 
@@ -90,7 +97,7 @@ def blog_list(request):
     # blogs = BlogModels.Blog.objects.all()
     blogs_all_list = BlogModels.Blog.objects.filter(is_deleted=False)  # exclude是不包含，与filter相反
     context = get_blog_list_common_data(request, blogs_all_list)
-    return render_to_response("Myblog/blog_list.html", context)
+    return render(request,"Myblog/blog_list.html", context)
 
 
 def blogs_with_type(request, blog_type_id):
@@ -99,7 +106,7 @@ def blogs_with_type(request, blog_type_id):
     blogs_all_list = BlogModels.Blog.objects.filter(is_deleted=False).filter(blog_type=blog_type)
     context = get_blog_list_common_data(request, blogs_all_list)
     context['blog_type'] = blog_type
-    return render_to_response('Myblog/blog_with_type.html', context)
+    return render(request,'Myblog/blog_with_type.html', context)
 
 
 def blogs_with_date(request, year, month):
@@ -107,7 +114,7 @@ def blogs_with_date(request, year, month):
     blogs_all_list = BlogModels.Blog.objects.filter(is_deleted=False).filter(ctime__year=year, ctime__month=month)
     context = get_blog_list_common_data(request, blogs_all_list)
     context['blogs_with_date'] = '%s年%s月' % (year, month)
-    return render_to_response('Myblog/blog_with_date.html', context)
+    return render(request,'Myblog/blog_with_date.html', context)
 
 
 
