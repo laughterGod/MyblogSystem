@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.conf import settings
 
 from comment.models import Comment
+from comment.forms import CommentForm
 
 
 # Create your views here.
@@ -84,6 +85,7 @@ def blog_detail(request, blog_id):
     context = dict()
     context['blog'] = blog
     context['comments'] = comments
+    context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model, 'object_id':blog_id})
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
     context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
     # context['user'] = request.user
