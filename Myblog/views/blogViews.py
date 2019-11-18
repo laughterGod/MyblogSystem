@@ -60,7 +60,7 @@ def blog_detail(request, blog_id):
     blog = get_object_or_404(BlogModels.Blog, pk=blog_id)
     read_cookie_key = read_statistics_once_read(request, blog)
     blog_content_type = ContentType.objects.get_for_model(blog)
-    comments = Comment.objects.filter(content_type=blog_content_type, object_id=blog.pk)
+    comments = Comment.objects.filter(content_type=blog_content_type, object_id=blog.pk, parent=None)
 
     '''
     if not request.COOKIES.get('blog_%s_readed' % blog_id):
@@ -85,7 +85,7 @@ def blog_detail(request, blog_id):
     context = dict()
     context['blog'] = blog
     context['comments'] = comments
-    context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model, 'object_id':blog_id})
+    context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model, 'object_id':blog_id, 'reply_comment_id': 0})
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
     context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
     # context['user'] = request.user

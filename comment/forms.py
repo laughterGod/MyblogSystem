@@ -9,6 +9,7 @@ class CommentForm(forms.Form):
     object_id = forms.IntegerField(widget=forms.HiddenInput)
     # text = forms.CharField(widget=forms.Textarea)
     text = forms.CharField(widget=CKEditorWidget(config_name='comment_ckeditor'), error_messages={'required': '评论内容不能为空'})  # 使用ckeditor 富文本编辑
+    reply_comment_id = forms.IntegerField(widget=forms.HiddenInput(attrs={'id': 'reply_comment_id'}))
 
     def __init__(self, *args, **kwargs):
         if 'user' in kwargs:
