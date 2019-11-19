@@ -25,3 +25,9 @@ def get_like_status(context, obj):
         return ''
 
 
+@register.simple_tag
+def get_content_type(obj):
+    content_type = ContentType.objects.get_for_model(obj)
+    return content_type.model
+
+
