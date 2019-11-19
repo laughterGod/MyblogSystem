@@ -28,6 +28,7 @@ urlpatterns = [
     path('blog/', include('Myblog.urls')),
     # re_path('^$', admin.site.urls)
     path('comment/', include('comment.urls')),
+    path('likes/', include('likes.urls')),
     path('login/', login_user, name='login'),
     path('register/', register, name='register'),
 ]

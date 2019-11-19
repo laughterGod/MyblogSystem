@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'Myblog.apps.MyblogConfig',
     'read_statistics',
-    'comment'
+    'comment',
+    'likes',
 
 ]
 
