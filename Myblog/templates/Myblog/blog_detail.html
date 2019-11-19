@@ -31,7 +31,7 @@
                 </ul>
                 <div class="blog-content">{{ blog.content|safe }}</div>
                 <div class="like" onclick="likeChange(this, 'blog', {{ blog.pk }})">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status blog %}"></span>
                     <span class="liked-num">{% get_like_count blog %}</span>
                     <span>喜欢</span>
                 </div>
