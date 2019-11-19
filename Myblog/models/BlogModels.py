@@ -18,12 +18,12 @@ class BlogType(models.Model):
 
 class Blog(models.Model, ReadNumExpandMethod):
     title = models.CharField(max_length=50)
-    blog_type =  models.ForeignKey(BlogType, on_delete=models.DO_NOTHING)
+    blog_type =  models.ForeignKey(BlogType, on_delete=models.CASCADE)
     content = RichTextUploadingField()
     # ctime = models.DateTimeField(default=timezone.now())
     ctime = models.DateTimeField(auto_now_add=True)
     utime = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     read_details = GenericRelation(ReadDetail)
     is_deleted = models.BooleanField(default=False)
     # read_num = models.IntegerField(default=0)

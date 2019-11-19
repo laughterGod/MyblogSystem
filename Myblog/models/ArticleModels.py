@@ -10,7 +10,7 @@ class Article(models.Model):
     # ctime = models.DateTimeField(default=timezone.now())
     ctime = models.DateTimeField(auto_now_add=True)
     utime = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     is_deleted = models.BooleanField(default=False)
     readed_num = models.IntegerField(default=0)
 

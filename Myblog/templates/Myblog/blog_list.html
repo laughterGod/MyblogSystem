@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load comment_tags %}
 
 {# 页面标题 #}
 {% block title %}
@@ -26,7 +27,7 @@
                                 </a>
                                 <p class="blog-info">
                                     <span class="glyphicon glyphicon-tag"></span> <a href="{% url 'Myblog:blogs_with_type' blog.blog_type.id %}">{{ blog.blog_type.type_name }}</a>&nbsp;&nbsp;
-                                    <span class="glyphicon glyphicon-time"></span> {{ blog.ctime|date:"Y-m-d" }}&nbsp;&nbsp; 阅读({{ blog.get_read_num }})
+                                    <span class="glyphicon glyphicon-time"></span> {{ blog.ctime|date:"Y-m-d" }}&nbsp;&nbsp; 阅读({{ blog.get_read_num }})&nbsp;&nbsp; 评论({% get_comment_count blog %})
                                 </p>
                                 <p>{{ blog.content|striptags|truncatechars:150 }}</p>
                             </div>
