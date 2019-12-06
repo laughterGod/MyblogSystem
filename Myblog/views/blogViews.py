@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.contenttypes.models import ContentType
 from read_statistics.utils import read_statistics_once_read
+# from user.forms import LoginForm
 from django.http import HttpResponse, HttpResponseRedirect
 from ..models import BlogModels
 from django.template import loader
@@ -89,6 +90,7 @@ def blog_detail(request, blog_id):
     # context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model, 'object_id':blog_id, 'reply_comment_id': 0})
     context['previous_blog'] = BlogModels.Blog.objects.filter(ctime__gt=blog.ctime).last()  # __gt大于
     context['next_blog'] = BlogModels.Blog.objects.filter(ctime__lt=blog.ctime).first()  # __lt小于
+    # context['login_form'] = LoginForm()
     # context['user'] = request.user
     # response = render(request,"Myblog/blog_detail.html", context)
     response = render(request, "Myblog/blog_detail.html", context)

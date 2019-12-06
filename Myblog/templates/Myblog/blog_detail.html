@@ -185,7 +185,11 @@
                         var liked_num = $(obj.getElementsByClassName('liked-num'));
                         liked_num.text(data['liked_num']);
                     }else {
-                        alert(data['message']);
+                        if(data['code']==400){
+                            $('#login_modal').modal('show');
+                        }else{
+                            alert(data['message']);
+                        }
                     }
                 },
                 error:function (xhr) {
@@ -266,7 +270,6 @@
                 }
             });
             return false;
-        })
-
+        });
     </script>
 {% endblock %}

@@ -10,6 +10,10 @@ ul{
     list-style-type: none;
 }
 
+ul.navbar-right{
+    margin-right: 0;
+}
+
 /*这个废弃了，用bootstrap代替了css*/
 /*div.nav {*/
     /*background: #bdd1e2;*/
