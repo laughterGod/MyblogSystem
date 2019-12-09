@@ -9,7 +9,8 @@
     <div class="containter">
         <div class="row">
             <div class="col-xs-4 col-xs-offset-4">
-                <div class="panel panel-default">
+                {% if not user.is_authenticated %}
+                    <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">登录</h3>
                     </div>
@@ -33,6 +34,12 @@
                         </form>
                     </div>
                 </div>
+                {% else %}
+                    <span>已登录，跳转到首页...</span>
+                    <script type="text/javascript">
+                        window.location.href = '/';
+                    </script>
+                {% endif %}
             </div>
         </div>
     </div>
