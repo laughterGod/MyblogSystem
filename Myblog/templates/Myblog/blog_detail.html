@@ -59,7 +59,7 @@
                     <h3 class="comment-area-title">提交评论</h3>
                     {% if user.is_authenticated %}
                         <form id="comment_form" action="{% url 'comment:update_comment' %}" method="POST" style="overflow: hidden">
-                            <label>{{ user.username }}，欢迎评论！</label>
+                            <label>{{ user.get_nickname_or_username }}，欢迎评论！</label>
                             <div id="reply_content_container" style="display:none;">
                                 <p id="reply_title">回复：</p>
                                 <div id="reply_content"></div>
@@ -92,27 +92,27 @@
                         {% get_comment_list blog as comments %}
                         {% for comment in comments %}
                             <div id="root_{{ comment.pk }}" class="comment">
-                                <span>{{ comment.user.username }}</span>
+                                <span>{{ comment.user.get_nickname_or_username }}</span>
                                 <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }})：</span>
                                 <div id="comment_{{ comment.id }}">{{ comment.text|safe }}</div>
                                 <div class="like" onclick="likeChange(this, '{% get_content_type comment %}', {{ comment.pk }})">
                                     <span class="glyphicon glyphicon-thumbs-up {% get_like_status comment %}"></span>
                                     <span class="liked-num">{% get_like_count comment %}</span>
                                 </div>
-                                <a href="javascript:reply({{ comment.id }});">回复</a>
+                                <a href="javascript:reply({{ comment.id }});"> 回复 </a>
                             
                                 {% for reply in comment.root_comment.all %}
                                     <div class="reply">
-                                        <span>{{ reply.user.username }}</span>
+                                        <span>{{ reply.user.get_nickname_or_username }}</span>
                                         <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }})</span>
                                         <span>回复</span>
-                                        <span>{{ reply.reply_to.username }}：</span>
+                                        <span>{{ reply.reply_to.get_nickname_or_username }}：</span>
                                         <div id="comment_{{ reply.id }}">{{ reply.text|safe }}</div>
                                         <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
                                             <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
                                             <span class="liked-num">{% get_like_count reply %}</span>
                                         </div>
-                                        <a href="javascript:reply({{ reply.id }});">回复</a>
+                                        <a href="javascript:reply({{ reply.id }});"> 回复 </a>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -223,13 +223,13 @@
                             // var comment_html = '<div id="root_' + data['pk'] + '" class="comment"><span>' + data['username'] + '</span><span> (' + timeFormat(data['comment_time']) + ')：</span><div id="comment_' + data['pk'] + '">' + data['text'] + '</div><a href="javascript:reply(' + data['pk'] + ');">回复</a></div>';
                             var comment_html = '<div id="root_{0}" class="comment">' +
                                 '<span>{1}</span>' +
-                                '<span>({2})：</span>' +
+                                '<span> ({2})：</span>' +
                                 '<div id="comment_{0}">{3}</div>' +
                                 '<div class="like" onclick="likeChange(this, \'{4}\', {0})">' +
                                     '<span class="glyphicon glyphicon-thumbs-up"></span> ' +
                                     '<span class="liked-num">0</span>' +
                                 '</div>' +
-                                '<a href="javascript:reply({0});">回复</a>' +
+                                '<a href="javascript:reply({0});"> 回复 </a>' +
                                 '</div>';
                             comment_html = comment_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['text'], data['content_type']);
                             $("#comment_list").prepend(comment_html);
@@ -238,15 +238,15 @@
                             // var reply_html ='<div class="reply"><span>' + data['username'] + '</span><span> (' + timeFormat(data['comment_time']) + ')</span><span> 回复 </span><span>' + data['reply_to'] + '：</span><div id="comment_' + data['pk'] + '">' + data['text'] + '</div><a href="javascript:reply(' + data['pk'] + ');">回复</a></div>';
                             var reply_html = '<div class="reply">' +
                                         '<span>{1}</span>' +
-                                        '<span>({2})</span>' +
-                                        '<span>回复</span>' +
+                                        '<span> ({2})</span>' +
+                                        '<span> 回复 </span>' +
                                         '<span>{3}：</span>' +
                                         '<div id="comment_{0}">{4}</div>' +
                                         '<div class="like" onclick="likeChange(this, \'{5}\', {0})">' +
                                             '<span class="glyphicon glyphicon-thumbs-up\"></span> ' +
                                             '<span class="liked-num">0</span>' +
                                         '</div>' +
-                                        '<a href="javascript:reply({0});">回复</a>' +
+                                        '<a href="javascript:reply({0});"> 回复 </a>' +
                                     '</div>';
                             reply_html = reply_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['reply_to'], data['text'], data['content_type']);
                             $("#root_" + data['root_pk']).append(reply_html);

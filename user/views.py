@@ -4,7 +4,12 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .forms import LoginForm, RegForm
+from .forms import LoginForm, RegForm, ChangeNicknameForm, BindEmailForm
+from .models import Profile
+import string
+import random
+import time
+from django.core.mail import send_mail
 
 
 def login_user(request):
@@ -75,6 +80,80 @@ def logout_user(request):
 def user_info(request):
     context = {}
     return render(request, 'user/user_info.html', context)
+
+
+def change_nickname(request):
+    redirect_to = request.GET.get('from', reverse('home'))
+
+    if request.method == 'POST':
+        form = ChangeNicknameForm(request.POST, user=request.user)
+        if form.is_valid():
+            nickname_new = form.cleaned_data['nickname_new']
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            profile.nickname = nickname_new
+            profile.save()
+            return redirect(redirect_to)
+    else:
+        form = ChangeNicknameForm()
+
+    context = {}
+    context['page_title'] = '修改昵称'
+    context['form_title'] = '修改昵称'
+    context['submit_text'] = '修改'
+    context['form'] = form
+    context['return_back_url'] = redirect_to
+    return render(request, 'form.html', context)
+
+
+def bind_email(request):
+    redirect_to = request.GET.get('from', reverse('home'))
+
+    if request.method == 'POST':
+        form = BindEmailForm(request.POST, request=request)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            request.user.email = email
+            request.user.save()
+            return redirect(redirect_to)
+    else:
+        form = BindEmailForm()
+
+    context = {}
+    context['page_title'] = '绑定邮箱'
+    context['form_title'] = '绑定邮箱'
+    context['submit_text'] = '绑定'
+    context['form'] = form
+    context['return_back_url'] = redirect_to
+    return render(request, 'user/bind_email.html', context)
+
+
+def send_verification_code(request):
+    email = request.GET.get('email', '')
+    data = {}
+
+    if email != '':
+        # 生成验证码
+        code = ''.join(random.sample(string.ascii_letters + string.digits, 4))
+        now = int(time.time())
+        send_code_time = request.session.get('send_code_time', 0)
+        if now - send_code_time < 30:
+            data['status'] = 'ERROR'
+        else:
+            request.session['bind_email_code'] = code
+            request.session['send_code_time'] = now
+
+            # 发送邮件
+            send_mail(
+                '绑定邮箱',
+                '验证码：%s' % code,
+                'hanziguo@foxmail.com',
+                [email],
+                fail_silently=False,
+            )
+            data['status'] = 'SUCCESS'
+    else:
+        data['status'] = 'ERROR'
+    return JsonResponse(data)
 
 
 
