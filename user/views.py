@@ -10,6 +10,7 @@ import string
 import random
 import time
 from django.core.mail import send_mail
+from django.conf import settings
 
 
 def login_user(request):
@@ -151,7 +152,7 @@ def send_verification_code(request):
             send_mail(
                 '绑定邮箱',
                 '验证码：%s' % code,
-                'hanziguo@foxmail.com',
+                settings.EMAIL_HOST_USER,
                 [email],
                 fail_silently=False,
             )

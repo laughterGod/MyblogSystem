@@ -6,6 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models.fields import exceptions
 from read_statistics.models import ReadNumExpandMethod, ReadDetail
 from django.contrib.contenttypes.fields import GenericRelation
+from django.urls import reverse
 
 
 # Create your models here.
@@ -27,6 +28,12 @@ class Blog(models.Model, ReadNumExpandMethod):
     read_details = GenericRelation(ReadDetail)
     is_deleted = models.BooleanField(default=False)
     # read_num = models.IntegerField(default=0)
+
+    def get_url(self):
+        return reverse('Myblog:blog_detail', kwargs={'blog_id': self.pk})
+
+    def get_email(self):
+        return self.author.email
 
     # 废弃了，已经在admin.py定制了
     def __str__(self):
