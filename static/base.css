@@ -14,6 +14,26 @@ ul.navbar-right{
     margin-right: 0;
 }
 
+div.footer {
+    margin-top: 3em;
+    background-color: #e4e3ee;
+    color: #555;
+}
+
+div.website-info {
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 1.5em;
+}
+
+div.website-info p {
+    margin-bottom: 0;
+}
+
+div.navbar {
+    background-color: #9dbdd1;
+}
+
 /*这个废弃了，用bootstrap代替了css*/
 /*div.nav {*/
     /*background: #bdd1e2;*/
