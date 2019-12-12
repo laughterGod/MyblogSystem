@@ -40,18 +40,6 @@ def login_user(request):
     return render(request, 'user/login.html', context)
 
 
-def login_for_modal(request):
-    login_form = LoginForm(request.POST)
-    data = {}
-    if login_form.is_valid():
-        user = login_form.cleaned_data['user']
-        login(request, user)
-        data['status'] = 'SUCCESS'
-    else:
-        data['status'] = 'ERROR'
-    return JsonResponse(data)
-
-
 def register(request):
     if request.method == 'POST':
         reg_form = RegForm(request.POST, request=request)
