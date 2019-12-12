@@ -186,7 +186,7 @@
                         liked_num.text(data['liked_num']);
                     }else {
                         if(data['code']==400){
-                            $('#login_modal').modal('show');
+                            window.location.href = '{% url 'login' %}?from={{ request.GET.from }}';
                         }else{
                             alert(data['message']);
                         }
