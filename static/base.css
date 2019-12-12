@@ -34,6 +34,12 @@ div.navbar {
     background-color: #9dbdd1;
 }
 
+.page-bottom{
+    position:absolute;  /*或者fixed*/
+    bottom:0;
+    width: 100%;
+}
+
 /*这个废弃了，用bootstrap代替了css*/
 /*div.nav {*/
     /*background: #bdd1e2;*/
