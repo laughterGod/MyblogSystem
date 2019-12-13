@@ -44,7 +44,7 @@ div.website-info p {
     background-color: #d9534f!important;
 }
 
-span.glyphicon-search{
+button.glyphicon-search{
     right:2em;
     background: none;
     border: none;

@@ -59,7 +59,8 @@
                                     {{ user.username }}
                                 {% endif %}
                                 <span class="badge unread-count live_notify_badge">{% if unread_count > 0 %}{{ unread_count }}{% endif %}</span>
-                                <span class="caret"></span></a>
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'user_info' %}">个人资料</a></li>
                                 <li><a href="{% url 'my_notifications' %}">我的消息<span class="badge unread-count live_notify_badge">{% if unread_count > 0 %}{{ unread_count }}{% endif %}</span></a></li>
@@ -76,7 +77,7 @@
                         <form class="navbar-form search-form" action="{% url 'search' %}">
                             <div class="form-group">
                                 <input type="text" name="wd" class="form-control" placeholder="搜索">
-                                <span class="glyphicon glyphicon-search"></span>
+                                <button class="glyphicon glyphicon-search"></button>
                             </div>
                         </form>
                     </li>
