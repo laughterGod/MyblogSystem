@@ -30,6 +30,8 @@ urlpatterns = [
     path('comment/', include('comment.urls')),
     path('likes/', include('likes.urls')),
     path('user/', include('user.urls')),
+    path('notifications/', include('notifications.urls', namespace='notifications')),
+    path('my_notifications/', my_notifications, name='my_notifications'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

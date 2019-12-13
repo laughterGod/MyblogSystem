@@ -32,6 +32,9 @@ class Blog(models.Model, ReadNumExpandMethod):
     def get_url(self):
         return reverse('Myblog:blog_detail', kwargs={'blog_id': self.pk})
 
+    def get_user(self):
+        return self.author
+
     def get_email(self):
         return self.author.email
 

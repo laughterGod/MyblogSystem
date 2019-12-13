@@ -1,4 +1,3 @@
-from django.shortcuts import render,redirect
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.http import JsonResponse
@@ -55,8 +54,8 @@ def update_comment(request):
             comment.reply_to = parent.user
         comment.save()
 
-        # 发送邮件通知
-        comment.send_mail()
+        # 发送邮件通知(废弃，已用signals实现啦)
+        # comment.send_mail()
 
         # 返回数据
         data['status'] = 'SUCCESS'
