@@ -11,13 +11,17 @@ ul{
 }
 
 ul.navbar-right{
-    margin-right: 0;
+    margin-right: -2em;
 }
 
 div.footer {
     margin-top: 3em;
     background-color: #e4e3ee;
     color: #555;
+}
+
+div.navbar {
+    background-color: #9dbdd1;
 }
 
 div.website-info {
@@ -30,10 +34,6 @@ div.website-info p {
     margin-bottom: 0;
 }
 
-div.navbar {
-    background-color: #9dbdd1;
-}
-
 .page-bottom{
     position:absolute;  /*或者fixed*/
     bottom:0;
@@ -43,6 +43,14 @@ div.navbar {
 .unread-count {
     background-color: #d9534f!important;
 }
+
+span.glyphicon-search{
+    right:2em;
+    background: none;
+    border: none;
+    color: #aaa;
+}
+
 
 /*这个废弃了，用bootstrap代替了css*/
 /*div.nav {*/

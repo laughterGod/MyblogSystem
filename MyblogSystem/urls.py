@@ -32,6 +32,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('notifications/', include('notifications.urls', namespace='notifications')),
     path('my_notifications/', include('my_notifications.urls')),
+    path('search/', search, name="search"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
