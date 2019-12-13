@@ -40,6 +40,10 @@ div.navbar {
     width: 100%;
 }
 
+.unread-count {
+    background-color: #d9534f!important;
+}
+
 /*这个废弃了，用bootstrap代替了css*/
 /*div.nav {*/
     /*background: #bdd1e2;*/

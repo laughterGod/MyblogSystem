@@ -28,7 +28,8 @@ def send_notification(sender, instance, **kwargs):
                 instance.user.get_nickname_or_username(),
                 strip_tags(instance.parent.text)
             )
-    notify.send(instance.user, recipient=recipient, verb=verb, action_object=instance)
+    url = instance.content_object.get_url() + "#comment_" + str(instance.pk)
+    notify.send(instance.user, recipient=recipient, verb=verb, action_object=instance, url=url)
 
 
 class SendMail(threading.Thread):

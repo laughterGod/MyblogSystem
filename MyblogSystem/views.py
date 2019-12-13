@@ -53,9 +53,5 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def my_notifications(request):
-    context = {}
-    return render(request, 'my_notifications.html', context)
-
 
 
