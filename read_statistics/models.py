@@ -28,8 +28,8 @@ class ReadNumExpandMethod():
 
 
 class ReadDetail(models.Model):
-    date = models.DateField(default=timezone.now)
-    read_num = models.IntegerField(default=0)
+    date = models.DateField(default=timezone.now, verbose_name="阅读日期")
+    read_num = models.IntegerField(default=0, verbose_name="阅读数")
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
