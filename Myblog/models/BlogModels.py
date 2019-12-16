@@ -16,6 +16,10 @@ class BlogType(models.Model):
     def __str__(self):
         return self.type_name
 
+    class Meta:
+        verbose_name = '博客类型'
+        verbose_name_plural = verbose_name
+
 
 class Blog(models.Model, ReadNumExpandMethod):
     title = models.CharField(max_length=50)
@@ -52,6 +56,8 @@ class Blog(models.Model, ReadNumExpandMethod):
 
     class Meta:
         ordering = ['-ctime']
+        verbose_name = '博客'
+        verbose_name_plural = verbose_name
 
 
 '''

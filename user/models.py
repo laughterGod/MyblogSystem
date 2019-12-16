@@ -9,6 +9,10 @@ class Profile(models.Model):
     def __str__(self):
         return '<Profile：%s for %s>' % (self.nickname, self.user.username)
 
+    class Meta:
+        verbose_name = '用户拓展信息'
+        verbose_name_plural = verbose_name
+
 
 def get_nickname(self):
     if Profile.objects.filter(user=self).exists():
