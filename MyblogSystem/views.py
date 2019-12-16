@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.db.models import Sum, Q
 
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
-from Myblog.models.BlogModels import Blog
+from Myblog.models.BlogModels import Blog, BlogType
 
 
 def get_7_days_hot_blogs():
@@ -28,6 +28,11 @@ def get_30_days_hot_blogs():
 def home(request):
     blog_content_type = ContentType.objects.get_for_model(Blog)
     dates, read_nums = get_seven_days_read_data(blog_content_type)
+    blog_types = BlogType.objects.all()
+    blog_types_list = []
+    for blog_type in blog_types:
+        blog_type.blog_count = Blog.objects.filter(blog_type=blog_type).count()
+        blog_types_list.append(blog_type)
 
     # 获取7天热门博客的缓存数据
     hot_blogs_for_7_days = cache.get('hot_blogs_for_7_days')
@@ -50,6 +55,7 @@ def home(request):
     context['yesterday_hot_data'] = get_yesterday_hot_data(blog_content_type)
     context['hot_blogs_for_7_days'] = hot_blogs_for_7_days
     context['hot_blogs_for_30_days'] = hot_blogs_for_30_days
+    context['blog_types'] = blog_types_list
 
     return render(request, 'home.html', context)
 
