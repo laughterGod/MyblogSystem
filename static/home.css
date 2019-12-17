@@ -83,3 +83,8 @@ div#container{
     color: #B9BFE4;
     margin: 5px 0;
 }
+
+.read-content-item li {
+    margin-bottom: 4px;
+    color: #337ab7;
+}

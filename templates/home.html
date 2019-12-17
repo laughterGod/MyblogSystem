@@ -89,14 +89,18 @@
                             <ul class="list">
                                 {% for hot_data in today_hot_data %}
                                     <li>
-                                        <span class="glyphicon glyphicon-fire"></span>
+                                        <span class="glyphicon glyphicon-arrow-up"></span>
                                         <span class="read-num">{{ hot_data.read_num }}</span>
                                         <a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>
                                     </li>
                                 {% empty %}
 {#                                    <li>今天暂时没有热门博客</li>#}
                                     {% for hot_blog in hot_blogs_for_all_days %}
-                                        <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                        <li>
+                                            <span class="glyphicon glyphicon-arrow-up"></span>
+                                            <span class="read-num">{{ hot_blog.read_num }}</span>
+                                            <a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>
+                                        </li>
                                     {% empty %}
                                         <li>今天暂时没有热门博客</li>
                                     {% endfor %}
@@ -108,14 +112,18 @@
                             <ul class="list">
                                 {% for hot_data in yesterday_hot_data %}
                                     <li>
-                                        <span class="glyphicon glyphicon-fire"></span>
+                                        <span class="glyphicon glyphicon-arrow-up"></span>
                                         <span class="read-num">{{ hot_data.read_num }}</span>
                                         <a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>
                                     </li>
                                 {% empty %}
 {#                                    <li>昨天暂时没有热门博客</li>#}
                                     {% for hot_blog in hot_blogs_for_all_days %}
-                                        <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                        <li>
+                                            <span class="glyphicon glyphicon-arrow-up"></span>
+                                            <span class="read-num">{{ hot_blog.read_num }}</span>
+                                            <a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>
+                                        </li>
                                     {% empty %}
                                         <li>昨天暂时没有热门博客</li>
                                     {% endfor %}
