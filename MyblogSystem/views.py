@@ -28,6 +28,7 @@ def get_30_days_hot_blogs():
 def home(request):
     blog_content_type = ContentType.objects.get_for_model(Blog)
     dates, read_nums = get_seven_days_read_data(blog_content_type)
+    blogs_all_nums = Blog.objects.filter(is_deleted=False).count()
     blog_types = BlogType.objects.all()
     blog_types_list = []
     for blog_type in blog_types:
@@ -56,6 +57,7 @@ def home(request):
     context['hot_blogs_for_7_days'] = hot_blogs_for_7_days
     context['hot_blogs_for_30_days'] = hot_blogs_for_30_days
     context['blog_types'] = blog_types_list
+    context['blogs_all_nums'] = blogs_all_nums
 
     return render(request, 'home.html', context)
 

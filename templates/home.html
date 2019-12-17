@@ -17,49 +17,189 @@
 {% block content %}
     <h3 class="home-content">欢迎访问我的网站，随便看</h3>
      <!-- 图表容器 DOM -->
-    <div id="container"></div>
+{#    <div id="container"></div>#}
     <!-- 引入 highcharts.js -->
-    <div class="hot-data">
-        <!-- 今天24小时内的热门博客 -->
-        <h3>今日热门博客</h3>
-        <ul>
-            {% for hot_data in today_hot_data %}
-                <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>
-            {% empty %}
-                <li>今天暂时没有热门博客</li>
-            {% endfor %}
-        </ul>
+    <div class="container">
+        <div class="content-item">
+            <h3 class="content-item-title">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span>博客</span>
+                <span class="content-more">共{{ blogs_all_nums }}篇博客<a href="{% url 'Myblog:blog_list' %}"> more&gt;</a></span>
+            </h3>
+            <div class="row">
+            <div class="col-sm-4">
+                <div class="home-block">
+                    <h4 class="home-block-title">博客分类</h4>
+                    <ul class="list">
+                        {% for blog_type in blog_types %}
+                            <li><a href="{% url 'Myblog:blogs_with_type' blog_type.id %}"> {{ blog_type.type_name }}（{{ blog_type.blog_count }}）</a></li>
+                        {% empty %}
+                            <li>暂无分类</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="home-block" style="min-height: 380px;">
+                    <!--阅读排行榜-->
+                    <div class="read-nav">
+                        <div class="read-list">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="javascript:void(0);">公众号</a></li>
+                                <li><a href="javascript:void(0);">趋势图</a></li>
+                                <li><a href="javascript:void(0);">昨日阅读榜</a></li>
+                                <li><a href="javascript:void(0);">我的主页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="read-content">
+                        <div class="read-content-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img style="width: 100%; max-width: 15em;" src="/static/img/qrcode_for_weixin.jpg">
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4 style="margin-bottom: 0;margin-top: 1em;font-weight: bolder;">
+                                        龺拉风韦
+                                    </h4>
+                                    <p style="margin-bottom: 2em;">突破局限，编写自己的人生</p>
+                                    <p>我的公众号用来写我的思考和感悟。<br>有感悟就写，更新频率可能会比较低。<br>也可通过公众号和我聊天~</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="read-content-item read-chart" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div id="container"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="read-content-item" style="display:none;">
+                            <ul class="list">
+                                {% for hot_data in yesterday_hot_data %}
+                                    <li>
+                                        <span class="glyphicon glyphicon-fire"></span>
+                                        <span class="read-num">{{ hot_data.read_num }}</span>
+                                        <a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>
+                                    </li>
+                                {% empty %}
+                                    <li>昨天暂时没有热门博客</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="read-content-item" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1" style="margin-top:1em;">
+                                    <h4 style="line-height: 1.25em;">欢迎来到我的主页！<br><br>
+                                    <a href="https://github.com/laughterGod" target="_blank">点击前往：我的github</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="content-item">
+            <h3 class="content-item-title">
+                <span class="glyphicon glyphicon-fire"></span>
+                <span>热读榜</span>
+            </h3>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="home-block">
+                        <h4 class="home-block-title">今日榜</h4>
+                        <ul class="list">
+                             {% for hot_data in today_hot_data %}
+                                 <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>
+                             {% empty %}
+                                 <li>今天暂时没有热门博客</li>
+                             {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+{#                <div class="col-sm-3">#}
+{#                    <div class="home-block">#}
+{#                        <h4 class="home-block-title">昨日榜</h4>#}
+{#                        <ul class="list">#}
+{#                            {% for hot_data in yesterday_hot_data %}#}
+{#                                <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>#}
+{#                            {% empty %}#}
+{#                                <li>昨天暂时没有热门博客</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="col-sm-4">
+                    <div class="home-block">
+                        <h4 class="home-block-title">周榜</h4>
+                        <ul class="list">
+                             {% for hot_blog in hot_blogs_for_7_days %}
+                                 <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
+                             {% empty %}
+                                 <li>本周暂时没有热门博客</li>
+                             {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="home-block">
+                        <h4 class="home-block-title">月榜</h4>
+                        <ul class="list">
+                            {% for hot_blog in hot_blogs_for_30_days %}
+                                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
+                            {% empty %}
+                                <li>本月暂时没有热门博客</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="hot-data">
-        <h3>昨日热门博客</h3>
-        <ul>
-            {% for hot_data in yesterday_hot_data %}
-                <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>
-            {% empty %}
-                <li>昨天暂时没有热门博客</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="hot-data">
-        <h3>本周热门博客</h3>
-        <ul>
-            {% for hot_blog in hot_blogs_for_7_days %}
-                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
-            {% empty %}
-                <li>本周暂时没有热门博客</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="hot-data">
-        <h3>本月热门博客</h3>
-        <ul>
-            {% for hot_blog in hot_blogs_for_30_days %}
-                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
-            {% empty %}
-                <li>本月暂时没有热门博客</li>
-            {% endfor %}
-        </ul>
-    </div>
+{#    <div class="hot-data">#}
+{#        <!-- 今天24小时内的热门博客 -->#}
+{#        <h3>今日热门博客</h3>#}
+{#        <ul>#}
+{#            {% for hot_data in today_hot_data %}#}
+{#                <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>#}
+{#            {% empty %}#}
+{#                <li>今天暂时没有热门博客</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </div>#}
+{#    <div class="hot-data">#}
+{#        <h3>昨日热门博客</h3>#}
+{#        <ul>#}
+{#            {% for hot_data in yesterday_hot_data %}#}
+{#                <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>#}
+{#            {% empty %}#}
+{#                <li>昨天暂时没有热门博客</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </div>#}
+{#    <div class="hot-data">#}
+{#        <h3>本周热门博客</h3>#}
+{#        <ul>#}
+{#            {% for hot_blog in hot_blogs_for_7_days %}#}
+{#                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>#}
+{#            {% empty %}#}
+{#                <li>本周暂时没有热门博客</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </div>#}
+{#    <div class="hot-data">#}
+{#        <h3>本月热门博客</h3>#}
+{#        <ul>#}
+{#            {% for hot_blog in hot_blogs_for_30_days %}#}
+{#                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>#}
+{#            {% empty %}#}
+{#                <li>本月暂时没有热门博客</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </div>#}
 
 
     <script>
@@ -97,5 +237,36 @@
         };
         // 图表初始化函数
         var chart = Highcharts.chart('container', options);
+    </script>
+
+    <script type="text/javascript">
+        /*绑定切换排行榜页面*/
+        $(".read-list li").each(function(){
+            $(this).click(function(){
+                //设置active
+                var index = $(".read-list li").index($(this));
+                $(".read-list li").removeClass('active');
+                $(this).addClass('active');
+
+                //切换标签页
+                $(".read-content-item").hide();
+                $(".read-content-item:eq(" + index + ")").show();
+            });
+        });
+
+        /*设置排行样式*/
+        $(".read-content-item").each(function(){
+            var icons = ['glyphicon-thumbs-up', 'glyphicon-fire'];
+            var old_icons = 'glyphicon-arrow-up';
+
+            for (var i = 0; i < icons.length; i++) {
+                var item = $(this).find('ul li:eq('+i+')');
+                var icon = item.find('.glyphicon');
+                if(icon){
+                    icon.removeClass(old_icons);
+                    icon.addClass(icons[i]);
+                }
+            }
+        });
     </script>
 {% endblock %}

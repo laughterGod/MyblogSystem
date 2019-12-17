@@ -8,12 +8,55 @@ h3.home-content{
 div#container{
     margin: 0 auto;
     height: 20em;
-    min-width: 20em;
-    max-width: 30em;
+    min-width: 40em;
+    max-width: 120em;
 }
 
+/*div.hot-data{*/
+/*    text-align: center;*/
+/*    margin-top: 2em;*/
+/*}*/
 
-div.hot-data{
-    text-align: center;
-    margin-top: 2em;
+.home-block {
+    /* border: 1px #ccc solid; */
+    border-radius: 6px;
+    padding: 16px 1em 5px 1.5em;
+    margin-bottom: 1em;
 }
+
+.home-block .list a {
+    color: #333;
+}
+
+.home-block-title {
+    border-bottom: 1px #ccc solid;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.content-more {
+    font-size: 0.6em;
+    margin-left: 1em;
+}
+
+.content-item-title {
+    color: #222;
+}
+
+.read-content-item {
+    padding-top: 1em;
+    white-space: nowrap;
+}
+
+.read-content-item .read-num {
+    width: 2em;
+    display: inline-block;
+}
+
+.home-block .list li {
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
