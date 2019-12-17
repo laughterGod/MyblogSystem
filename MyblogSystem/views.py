@@ -15,14 +15,19 @@ def get_7_days_hot_blogs():
     today = timezone.now().date()
     date = today - datetime.timedelta(days=7)
     blogs = Blog.objects.filter(read_details__date__lte=today, read_details__date__gte=date).values('id', 'title').annotate(read_num_sum=Sum('read_details__read_num')).order_by('-read_num_sum')
-    return blogs[:7]
+    return blogs[:14]
 
 
 def get_30_days_hot_blogs():
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     blogs = Blog.objects.filter(read_details__date__lte=today, read_details__date__gte=date).values('id', 'title').annotate(read_num_sum=Sum('read_details__read_num')).order_by('-read_num_sum')
-    return blogs[:7]
+    return blogs[:14]
+
+
+def get_all_days_hot_blogs():
+    blogs = Blog.objects.values('id', 'title').annotate(read_num_sum=Sum('read_details__read_num')).order_by('-read_num_sum')
+    return blogs[:14]
 
 
 def home(request):
@@ -41,6 +46,9 @@ def home(request):
     # 获取30天热门博客的缓存数据
     hot_blogs_for_30_days = cache.get('hot_blogs_for_30_days')
 
+    # 获取总热门博客的缓存数据
+    hot_blogs_for_all_days = cache.get('hot_blogs_for_all_days')
+
     if hot_blogs_for_7_days is None:
         hot_blogs_for_7_days = get_7_days_hot_blogs()
         cache.set('hot_blogs_for_7_days', hot_blogs_for_7_days, 3600)   # 缓存1小时
@@ -49,6 +57,10 @@ def home(request):
         hot_blogs_for_30_days = get_30_days_hot_blogs()
         cache.set('hot_blogs_for_30_days', hot_blogs_for_30_days, 3600)   # 缓存1小时
 
+    if hot_blogs_for_all_days is None:
+        hot_blogs_for_all_days = get_all_days_hot_blogs()
+        cache.set('hot_blogs_for_all_days', hot_blogs_for_all_days, 3600)   # 缓存1小时
+
     context = dict()
     context['dates'] = dates
     context['read_nums'] = read_nums
@@ -56,6 +68,7 @@ def home(request):
     context['yesterday_hot_data'] = get_yesterday_hot_data(blog_content_type)
     context['hot_blogs_for_7_days'] = hot_blogs_for_7_days
     context['hot_blogs_for_30_days'] = hot_blogs_for_30_days
+    context['hot_blogs_for_all_days'] = hot_blogs_for_all_days
     context['blog_types'] = blog_types_list
     context['blogs_all_nums'] = blogs_all_nums
 

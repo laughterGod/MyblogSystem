@@ -54,11 +54,13 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="active"><a href="javascript:void(0);">公众号</a></li>
                                 <li><a href="javascript:void(0);">趋势图</a></li>
+                                <li><a href="javascript:void(0);">今日阅读榜</a></li>
                                 <li><a href="javascript:void(0);">昨日阅读榜</a></li>
                                 <li><a href="javascript:void(0);">我的主页</a></li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="read-content">
                         <div class="read-content-item">
                             <div class="row">
@@ -74,12 +76,32 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="read-content-item read-chart" style="display:none;">
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div id="container"></div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="read-content-item" style="display:none;">
+                            <ul class="list">
+                                {% for hot_data in today_hot_data %}
+                                    <li>
+                                        <span class="glyphicon glyphicon-fire"></span>
+                                        <span class="read-num">{{ hot_data.read_num }}</span>
+                                        <a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>
+                                    </li>
+                                {% empty %}
+{#                                    <li>今天暂时没有热门博客</li>#}
+                                    {% for hot_blog in hot_blogs_for_all_days %}
+                                        <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                    {% empty %}
+                                        <li>今天暂时没有热门博客</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
                         </div>
 
                         <div class="read-content-item" style="display:none;">
@@ -91,7 +113,12 @@
                                         <a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>
                                     </li>
                                 {% empty %}
-                                    <li>昨天暂时没有热门博客</li>
+{#                                    <li>昨天暂时没有热门博客</li>#}
+                                    {% for hot_blog in hot_blogs_for_all_days %}
+                                        <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                    {% empty %}
+                                        <li>昨天暂时没有热门博客</li>
+                                    {% endfor %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -115,18 +142,18 @@
                 <span>热读榜</span>
             </h3>
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="home-block">
-                        <h4 class="home-block-title">今日榜</h4>
-                        <ul class="list">
-                             {% for hot_data in today_hot_data %}
-                                 <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})</li>
-                             {% empty %}
-                                 <li>今天暂时没有热门博客</li>
-                             {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+{#                <div class="col-sm-4">#}
+{#                    <div class="home-block">#}
+{#                        <h4 class="home-block-title">今日榜</h4>#}
+{#                        <ul class="list">#}
+{#                             {% for hot_data in today_hot_data %}#}
+{#                                 <li><a href="{% url 'Myblog:blog_detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a></li>#}
+{#                             {% empty %}#}
+{#                                 <li>今天暂时没有热门博客</li>#}
+{#                             {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
 {#                <div class="col-sm-3">#}
 {#                    <div class="home-block">#}
 {#                        <h4 class="home-block-title">昨日榜</h4>#}
@@ -144,9 +171,14 @@
                         <h4 class="home-block-title">周榜</h4>
                         <ul class="list">
                              {% for hot_blog in hot_blogs_for_7_days %}
-                                 <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
+                                 <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
                              {% empty %}
-                                 <li>本周暂时没有热门博客</li>
+{#                                 <li>本周暂时没有热门博客</li>#}
+                                 {% for hot_blog in hot_blogs_for_all_days %}
+                                    <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                {% empty %}
+                                    <li>本周暂时没有热门博客</li>
+                                {% endfor %}
                              {% endfor %}
                         </ul>
                     </div>
@@ -156,9 +188,26 @@
                         <h4 class="home-block-title">月榜</h4>
                         <ul class="list">
                             {% for hot_blog in hot_blogs_for_30_days %}
-                                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})</li>
+                                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
                             {% empty %}
-                                <li>本月暂时没有热门博客</li>
+{#                                <li>本月暂时没有热门博客</li>#}
+                                {% for hot_blog in hot_blogs_for_all_days %}
+                                    <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                                {% empty %}
+                                    <li>本月暂时没有热门博客</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="home-block">
+                        <h4 class="home-block-title">总榜</h4>
+                        <ul class="list">
+                            {% for hot_blog in hot_blogs_for_all_days %}
+                                <li><a href="{% url 'Myblog:blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a></li>
+                            {% empty %}
+                                <li>暂时没有热门博客</li>
                             {% endfor %}
                         </ul>
                     </div>
