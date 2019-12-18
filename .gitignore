@@ -6,4 +6,3 @@ db.sqlite3
 nohup*
 settings.py
 static_collected/
-/media/
