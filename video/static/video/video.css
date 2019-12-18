@@ -1,0 +1,30 @@
+.video {
+    width: 80%;
+    height: auto;
+    margin-right: 10em;
+    margin-left: 10em;
+}
+
+.video-info{
+    margin-top: 20px;
+    margin-right: 10em;
+    margin-left: 10em;
+}
+
+.video-title{
+    font-size: 1.28em;
+    font-weight: 900;
+    line-height: 0.2em;
+    color: #000000;
+}
+
+.video-view-count{
+    margin-top: 16px;
+    color: #888888;
+}
+
+.video-view-operation{
+    margin-top: 3px;
+    color: #888888;
+}
+

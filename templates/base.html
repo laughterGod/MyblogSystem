@@ -32,6 +32,7 @@
                 <ul class="nav navbar-nav">
                     <li class="{% block nav_home_active %}{% endblock %}"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
                     <li class="{% block nav_blog_active %}{% endblock %}"><a href="{% url 'Myblog:blog_list' %}"><span class="glyphicon glyphicon-pencil"></span> 博客</a></li>
+                    <li class="{% block nav_video_active %}{% endblock %}"><a href="{% url 'video:index' %}"><span class="glyphicon glyphicon-facetime-video"></span> 视频</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if not user.is_authenticated %}

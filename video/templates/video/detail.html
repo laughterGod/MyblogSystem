@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'video/video.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ui unstackable two column grid">
+    <div class=" ten wide column">
+        <video id="video" class="video" autoplay="autoplay" controls="controls">
+            <source src="{{video.file.url}}" type="video/mp4">
+        </video>
+        <div id="video-info" class="video-info">
+            <div class="video-title">{{ video.title }}</div>
+            <div class="video-view-count">{{ video.view_count }}次观看</div>
+            <div class="video-view-operation">
+                {{video.desc}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+ 
