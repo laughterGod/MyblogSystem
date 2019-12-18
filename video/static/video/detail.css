@@ -1,9 +1,9 @@
-/*.video {*/
-/*    width: 80%;*/
-/*    height: auto;*/
-/*    margin-right: 10em;*/
-/*    margin-left: 10em;*/
-/*}*/
+.video {
+    width: 100%;
+    height: auto;
+    /*margin-right: 10em;*/
+    /*margin-left: 10em;*/
+}
 
 .video-info{
     margin-top: 20px;
