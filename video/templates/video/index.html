@@ -2,32 +2,65 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'video/index.css' %}">
+{% endblock %}
+
 
 {% block content %}
-<div class="ui grid">
-    {% for item in video_list %}
-    <div class="four wide column">
-        <div class="ui card">
-            <a class="image" href="{% url 'video:detail' item.id %}">
-                {% thumbnail item.cover "300x200" crop="center" as im %}
-                <img class="ui image" src="{{ im.url }}">
-                {% empty %}
-                {% endthumbnail %}
-                <i class="large play icon v-play-icon"></i>
-            </a>
-            <div class="content">
-                <a class="header" href="{% url 'video:detail' item.id %}">{{ item.title }}</a>
-                <div class="meta">
-                    <span class="date">发布于{{ item.create_time }}</span>
-                </div>
-                <div class="description">
-                    {{ item.view_count}}次观看
-                </div>
-            </div>
+    <div class="header-banner">
+        <div class="container">
+            <h1>我的视频</h1>
+            <p>可通过筛选器快速找到对应类别的视频</p>
+            <p>喜欢就收藏一下吧</p>
         </div>
     </div>
-    {% empty %}
-    <h3>暂无数据</h3>
-    {% endfor %}
-</div>
+    <div class="row">
+        {% for item in video_list %}
+            <div class="col-sm-3 col-md-2">
+                <div class="thumbnail">
+                    <a class="image" href="{% url 'video:detail' item.id %}">
+                        {% thumbnail item.cover "300x200" crop="center" as im %}
+                            <img src="{{ im.url }}" alt="">
+                        {% empty %}
+                        {% endthumbnail %}
+{#                        <button class="glyphicon glyphicon-play"></button>#}
+                    </a>
+                    <div class="caption">
+                        <a class="header" href="{% url 'video:detail' item.id %}">{{ item.title }}</a>
+                        <div class="meta"><span class="date">发布于{{ item.create_time }}</span></div>
+                        <div class="description">{{ item.view_count}}次观看</div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <h3>暂无数据</h3>
+        {% endfor %}
+    </div>
+{#    <div class="ui grid">#}
+{#        {% for item in video_list %}#}
+{#        <div class="four wide column">#}
+{#            <div class="ui card">#}
+{#                <a class="image" href="{% url 'video:detail' item.id %}">#}
+{#                    {% thumbnail item.cover "300x200" crop="center" as im %}#}
+{#                    <img class="ui image" src="{{ im.url }}">#}
+{#                    {% empty %}#}
+{#                    {% endthumbnail %}#}
+{#                    <i class="large play icon v-play-icon"></i>#}
+{#                </a>#}
+{#                <div class="content">#}
+{#                    <a class="header" href="{% url 'video:detail' item.id %}">{{ item.title }}</a>#}
+{#                    <div class="meta">#}
+{#                        <span class="date">发布于{{ item.create_time }}</span>#}
+{#                    </div>#}
+{#                    <div class="description">#}
+{#                        {{ item.view_count}}次观看#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        {% empty %}#}
+{#        <h3>暂无数据</h3>#}
+{#        {% endfor %}#}
+{#    </div>#}
 {% endblock content %}
