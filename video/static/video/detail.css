@@ -18,13 +18,18 @@
     color: #000000;
 }
 
-.video-view-count{
+.video-view-time{
     margin-top: 16px;
     color: #888888;
 }
 
-.video-view-operation{
+.video-view-count{
     margin-top: 3px;
     color: #888888;
+}
+
+.video-view-operation{
+    margin-top: 10px;
+    color: #5b5b5b;
 }
 

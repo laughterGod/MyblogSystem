@@ -17,8 +17,8 @@ class Video(models.Model):
         ('0', '发布中'),
         ('1', '未发布'),
     )
-    title = models.CharField(default="你好懒，连标题都不传~", max_length=100, blank=True, verbose_name="视频标题")
-    desc = models.CharField(default="你好懒~", max_length=255, blank=True, verbose_name="视频简介")
+    title = models.CharField(max_length=100, verbose_name="视频标题")
+    desc = models.CharField(max_length=255, blank=True, null=True,verbose_name="视频简介")
     # classification = models.ForeignKey(Classification, on_delete=models.CASCADE, null=True)
     # file = models.FileField(upload_to=settings.VIDEO_DATA, max_length=255)
     # cover = models.ImageField(upload_to=settings.VIDEO_COVER, blank=True, null=True)

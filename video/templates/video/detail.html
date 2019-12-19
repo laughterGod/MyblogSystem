@@ -13,9 +13,14 @@
         </video>
         <div id="video-info" class="video-info">
             <div class="video-title">{{ video.title }}</div>
+            <div class="video-view-time">发布于{{ video.create_time }}</div>
             <div class="video-view-count">{{ video.view_count }}次观看</div>
             <div class="video-view-operation">
-                {{video.desc}}
+                {% if video.desc %}
+                    {{video.desc}}
+                {% else %}
+                    <span>你好懒啊，啥也没写~</span>
+                {% endif %}
             </div>
         </div>
     </div>
