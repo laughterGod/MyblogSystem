@@ -4,5 +4,5 @@ from .models import Video
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    # list_display = ('id', 'type_name')
+    list_display = ('id', 'title', 'cover', 'file', 'status', 'view_count', 'create_time')
     ordering = ('id',)
