@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{# 页面标题 #}
+{% block title %}
+    {{ video.title }}
+{% endblock %}
+
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'video/detail.css' %}">
 {% endblock %}

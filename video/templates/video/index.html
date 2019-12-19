@@ -2,6 +2,12 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
+{# 页面标题 #}
+{% block title %}
+    我的视频
+{% endblock %}
+
+
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'video/index.css' %}">
 {% endblock %}
