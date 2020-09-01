@@ -14,6 +14,12 @@ ul.navbar-right{
     margin-right: -2em;
 }
 
+.search-form {
+    display: flex;
+    width: 100%!important;
+    margin-left: 0!important;
+}
+
 div.footer {
     margin-top: 3em;
     background-color: #e4e3ee;
