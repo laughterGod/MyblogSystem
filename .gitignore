@@ -5,6 +5,7 @@ log/
 db.sqlite3
 nohup*
 settings.py
+settings.bak.py
 static_collected/
 /media/cache/
 *.mp4
