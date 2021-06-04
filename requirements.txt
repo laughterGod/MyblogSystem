@@ -2,7 +2,7 @@ bleach==3.1.4
 certifi==2019.6.16
 chardet==3.0.4
 configparser==3.7.4
-Django==2.2.13
+Django==2.2.21
 docutils==0.15.2
 idna==2.8
 Jinja2==2.11.2
